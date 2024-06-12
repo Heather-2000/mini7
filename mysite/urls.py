@@ -29,7 +29,6 @@ urlpatterns = [
     path('chatgpt/',include('chatgpt.urls')),
     path('selfchatgpt/',include('selfchatgpt.urls')),
     path('login/',login),
-    path('')
     
 ]
 
