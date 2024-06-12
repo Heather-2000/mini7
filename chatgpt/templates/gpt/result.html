@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with ChatGPT</title>
+    {% load static %}
+    {% block extrahead %}
+    <link rel="stylesheet" href="{% static 'gpt/style.css' %}">
+    {% endblock %}
+</head>
+<body>
+    <div class="chat-container">
+        {% for message in chat_history %}
+            <div class="chat-message user">
+                <div class="message-content">{{ message.user }}</div>
+            </div>
+            <div class="chat-message bot">
+                <div class="message-content">{{ message.bot }}</div>
+            </div>
+        {% endfor %}
+        <form action="chat" method="post" enctype="application/x-www-form-urlencoded">
+            {% csrf_token %}
+            <div id="file-module-0">
+                <label for="question">chatgpt에게 질문하기</label><br>
+                <textarea id="question" name="question"></textarea>
+            </div>
+            <div><button id="text-button" type="submit">질문</button></div>
+        </form>
+    </div>
+</body>
+</html>
