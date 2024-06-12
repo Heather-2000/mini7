@@ -22,7 +22,7 @@ body {
     position: relative; /* 부모 요소 */
 }
 
-#chat-history {
+.chat-history {
     margin-top: 20px;
     padding-top: 15px;
     padding: 0px 30px;
@@ -91,7 +91,7 @@ textarea:focus {
 }
 
 
-#question-box {
+.question-box {
     margin-bottom: 10px;
     position: fixed;
     bottom: 10px; /* 원하는 위치로 조정 */
@@ -101,7 +101,7 @@ textarea:focus {
     padding: 10px;
 }
 
-#text-button {
+.text-button {
     display: block;
     width: 100%;
     padding: 10px;
@@ -115,6 +115,6 @@ textarea:focus {
     margin-top: 1px;
 }
 
-#text-button:hover {
+.text-button:hover {
     background-color: #4baffb;
 }

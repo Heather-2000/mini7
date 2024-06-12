@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+<script>
+    function join_chk(){
+        let param = {
+            id: $("#id").val()
+            , pw: sha256($("#password").val())
+        };
+        $.ajax({
+            url: "join_chk",
+            type: 'post',
+            data: param,
+            dataType: "json",
+            success: function (data) {
+                if(data.result != "success"){
+                    alert("아이디 다른거 하셈 ㅡ.ㅡ");
+                }
+            },
+            error: function () {
+                alert("ERROR");
+            },
+            complete: function () {
+                $("#frm").attr("action","/login/").submit();
+            },
+        });
+    }
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/base.css" rel="stylesheet">
+    <title>LOGIN</title>
+</head>
+<body>
+<form id="frm" name="frm" class="frm">
+    <div class="login-box">
+        <div>
+            <div class="login">Join</div>
+        </div>
+        <hr class="hr"/>
+        <div class="login-text">ID</div>
+        <div class="id"><input type="text" id="id"></div>
+        <div class="login-text">PASSWORD</div>
+        <div class="pw"><input type="password" id="password"></div>
+        <div class="btn">
+            <button type="button" id="Join" class="btn" onclick="join_chk();">Join</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
