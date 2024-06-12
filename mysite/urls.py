@@ -21,11 +21,15 @@ from django.shortcuts import render
 def index(request):
     return render(request,'index.html')
 
+def login(request):
+    return render(request,'login.html')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index),
     path('chatgpt/',include('chatgpt.urls')),
     path('selfchatgpt/',include('selfchatgpt.urls')),
+    path('login/',login),
+    path('')
     
 ]
 
