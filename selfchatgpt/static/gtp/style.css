@@ -16,8 +16,8 @@ form {
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 80%; /* 너비를 80%로 설정 */
-    max-width: 800px; /* 최대 너비를 800px로 설정 */
+    width: 80%; 
+    max-width: 800px; 
 }
 label {
     font-size: 20px; 
