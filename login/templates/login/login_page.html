@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+<script>
+    function go_join() {
+        location.href="/login/join_page"
+    }
+    function login_chk(){
+        let param = {
+            id: $("#id").val()
+            , pw: sha256($("#password").val())
+        };
+        $.ajax({
+            url: "login_chk",
+            type: 'post',
+            data: param,
+            dataType: "json",
+            success: function (data) {
+                if (data.result != 'success') {
+                    alert(data.result);
+                } else {
+                    location.href = "/";
+                }
+            },
+            error: function () {
+                alert("ERROR");
+            },
+        });
+    }
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/base.css" rel="stylesheet">
+    <title>LOGIN</title>
+</head>
+<body>
+<form id="frm" name="frm" class="frm" method="post">
+    <div class="login-box">
+        <div>
+            <div class="login">LOGIN</div>
+        </div>
+        <hr class="hr"/>
+        <div class="login-text">ID</div>
+        <div class="id"><input type="text" id="id"></div>
+        <div class="login-text">PASSWORD</div>
+        <div class="pw"><input type="password" id="password" onkeydown="function tt(){if (window.event.keyCode == 13) {login_chk();}"></div>
+        <div class="btn">
+            <button type="button" id="login" class="btn" onclick="login_chk();">Login</button>
+            <button type="button" id="Join" class="btn" onclick="go_join();">Join</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

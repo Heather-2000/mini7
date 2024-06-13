@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // 초기 메시지 추가
+        if($("#data_len").val() == 'None'){
+            addChatMessage('bot', '안녕하세요! 🫧<br>KT 에이블스쿨에 관련해 질문해주세요.');
+        }
+    });
+
+    function answer(){
+        query = $("#question").val();
+        if (query == "") {
+            alert("질문이 없습니다.");
+            return;
+        }
+        let param = { query: query };
+        $.ajax({
+            method: "post",
+            url: "chat",
+            data: param,
+            dataType: "json",
+            success: function(response) {
+                var question = $('#question').val();
+                addChatMessage('me', question);
+
+                var result = response.result;
+                addChatMessage('bot', result);
+
+                $('#question').val('');
+            },
+            error: function(xhr, errmsg, err) {
+                console.log('Error:', errmsg);
+            }
+        });
+    }
+
+    // 채팅창에 메시지 추가하는 함수
+    function addChatMessage(sender, message) {
+        var chatHistory = $('#chat-history');
+        var messageClass = (sender === 'me') ? 'message me' : 'message bot';
+
+        var messageElement = $('<div class="' + messageClass + '"></div>').html(message);
+
+        chatHistory.append(messageElement);
+
+        chatHistory.scrollTop(chatHistory[0].scrollHeight);
+    }
+
+    function clearSession() {
+        $("#chat-form").attr("action","sessionClear").submit();
+    }
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Chat</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '../static/style.css' %}">
+    <style>
+        /* 여기에 추가적인 CSS를 넣어도 됨. */
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-nav nav-menu">
+                <a class="navbar-brand" href="/"><img class="homeIcon" src="../static/homeIcon.png" alt="홈 아이콘" /></a>
+                <a class="nav-link" href="https://aivle.kt.co.kr/home/main/indexMain">지원하기</a>
+                <!-- <a class="nav-link" href="/chatgpt/">하나만 물어봐요</a> -->
+                {% comment %} <a class="nav-link" href="/selfchatgpt/">대화하고 싶어요</a> {% endcomment %}
+                {% if login_cookies != 'None' %}
+                    {% comment %} <a class="nav-link" href="/login/logout">로그아웃</a> {% endcomment %}
+                {% else %}
+                    <a class="nav-link" href="/login/">로그인</a>
+                {% endif %}
+                <a class="nav-link" href="/login/join_page">회원가입!</a>
+            </div>
+        </div>
+    </nav>
+<div class="chat-container">
+    <form id="chat-form" method="post">
+        <input type="hidden" name="data_len" id="data_len" value="{{ data }}">
+        {% csrf_token %}
+        {% if data %}
+        <div class="chat-history">
+            {% for question, result in data %}
+            <div class="message me">{{ question }}</div>
+            <div class="message bot">{{ result }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div id="chat-history" class="chat-history">
+            <!-- 채팅 내용이 동적으로 추가될 부분 -->
+        </div>
+        <div id="question-box" class="question-box">
+            <div id="file-module-0">
+                <label for="question">ChatGPT에게 질문하기</label>
+                <textarea id="question" name="question"></textarea>
+            </div>
+            <div>
+                <input type="button" class="text-button" onclick="answer();" value="질문"/>
+                {% if login_cookies == 'None' %}
+                <input type="button" class="text-button" onclick="clearSession();" value="세션 지우기"/>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,194 @@
+@font-face {
+    font-family: 'NeoGothic';
+    src: url('fonts/AppleSDGothicNeoM.ttf') format('truetype');
+}
+
+html, body {
+    overflow: hidden; /* 전체 화면에서 스크롤 비활성화 */
+    height: 100%; /* 전체 높이를 100%로 설정 */
+}
+
+
+html {
+    font-family: 'Ownglyph_noocar-Rg', Arial, sans-serif; /* Fallback 폰트로 Arial, sans-serif를 지정 */
+    background-color: #E1F2FF;
+    line-height: 1.6;
+    background-image: url('chatBG.png'); /* 이미지 경로를 지정하세요 */
+    background-size: cover; /* 이미지가 화면 전체를 채우도록 조정 */
+    background-position: center; /* 이미지 중심이 화면 중심과 일치하도록 설정 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    height: 100%; /* 전체 높이 설정 */
+}
+
+
+body {
+    /* background-color: #E1F2FF; */
+    font-family: 'NeoGothic';
+    /* background-image: url('./chatBG.png'); */
+    background-size: 80%; /* 또는 'contain' 혹은 지정된 크기 사용 */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* 스크롤 시 배경 고정 */
+}
+
+.chat-container {
+    margin-top: 50px !important;
+    width: 400px;
+    margin: auto;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative; /* 부모 요소 */
+}
+
+.chat-history {
+    margin-top: 20px;
+    padding-top: 15px;
+    padding: 0px 30px;
+    height: calc(100vh - 275px); /* 채팅 내용이 넘칠 경우 스크롤 가능하도록 높이 설정 */
+    overflow-y: auto; /* 세로 스크롤바 추가 */
+}
+
+.message {
+    clear: both;
+    padding: 10px 15px;
+    margin: 10px 0;
+    max-width: 70%; /* 말풍선 최대 너비 설정 */
+    word-wrap: break-word; /* 긴 단어들이 말풍선 너비를 넘어가지 않도록 */
+    position: relative;
+}
+
+.message.me {
+    border-radius: 20px 20px 0 20px; /* 말풍선 모양 설정 */
+    float: right;
+    background-color:#4baffb; /* 사용자 말풍선 배경색 */
+    color: white; /* 사용자 말풍선 글자색 */
+}
+
+.message.bot {
+    top: 25px;
+    border-radius: 20px 20px 20px 0; /* 말풍선 모양 설정 */
+    float: left;
+    background-color: white; /* 봇 말풍선 배경색 */
+    color: black; /* 봇 말풍선 글자색 */
+    position: relative; /* 상대적 위치 설정 */
+}
+
+.message.bot::before {
+    content: 'ChatGPT'; /* 가상 요소에 표시할 텍스트 */
+    position: absolute; /* 절대적 위치 설정 */
+    top: -25px; /* 말풍선 위에 위치하도록 조정 */
+    left: 0px; /* 말풍선 왼쪽에 위치하도록 조정 */
+    font-size: 16px; /* 폰트 크기 설정 */
+    font-weight: bold; /* 폰트 굵기 설정 */
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* 테두리 포함한 박스의 전체 크기가 요소의 너비와 높이 */
+    resize: vertical; /* 사용자가 수직으로만 조절할 수 있도록 함 */
+    font-family: 'NeoGothic'; /* NeoGothic 폰트 사용 */
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+textarea:focus {
+    outline: none; /* 포커스된 상태에서 외곽선 제거 */
+    border-color: #4baffb; /* 포커스된 상태일 때 테두리 색상 변경 */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* 포커스된 상태일 때 약간의 그림자 효과 추가 */
+}
+
+
+.question-box {
+    margin-bottom: 10px;
+    position: fixed;
+    bottom: 10px; /* 원하는 위치로 조정 */
+    left: 50%; /* 가운데 정렬을 위한 조정 */
+    transform: translateX(-50%);
+    width: 400px; /* 원하는 너비로 조정 */
+    padding: 10px;
+}
+
+.text-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #19bec9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'NeoGothic'; /* NeoGothic 폰트 사용 */
+    font-size: 14px;
+    margin-top: 1px;
+}
+
+.text-button:hover {
+    background-color: #4baffb;
+}
+
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto; /* 자동 마진으로 중앙 정렬 */
+    padding: 20px;
+    flex-grow: 1; /* 컨테이너가 여유 공간을 모두 채움 */
+}
+
+.navbar {
+    color: black;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    width: 100%; /* 네비게이션 바 전체 너비 사용 */
+}
+
+.navbar-brand {
+    margin-right: auto; /* 오른쪽으로 모든 여백을 밀어내어 왼쪽 정렬 */
+    display: flex;
+    align-items: center;
+}
+
+.homeIcon {
+    height: auto;
+    width: 130px; /* 로고 이미지 크기 조정 */
+}
+
+.nav-menu {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto;
+}
+
+.nav-link {
+    padding: 10px 15px;
+    margin-left: 10px;
+    text-decoration: none;
+    color: black;
+    border-radius: 5px;
+    border: black 1px solid;
+}
+
+
+.nav-link:hover {
+    background-color: #d0eafe;
+}
